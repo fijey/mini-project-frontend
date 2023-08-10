@@ -25,46 +25,54 @@
 </template>
 
 <script>
-  import { ref } from 'vue';
-  import api from '@/api/api.js';
-  import FormField from '@/components/FormField.vue';
-  import { useRouter } from 'vue-router';
-  import { useToast } from 'vue-toastification';
+import { ref } from 'vue';
+import api from '@/api/api.js';
+import FormField from '@/components/FormField.vue';
+import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 
 export default {
-  components : {
+  components: {
     FormField
   },
   setup() {
-      const router = useRouter();
-      const toast = useToast();
-      const formData = ref({
-        email: '',
-        password: '',
-      });
+    const router = useRouter();
+    const toast = useToast();
+    const formData = ref({
+      email: '',
+      password: '',
+    });
 
-      const submitForm = () => {
-        api.post('/login', formData.value)
-          .then(response => {
-            if (response.status === 200) {
-              toast.success('Login Success, Redirecting To Dashboard', {
-                timeout: 2000
-              });
-              router.push('/');
-            }
-          })
-          .catch(error => {
-            toast.error(error.response.data.message, {
+    const submitForm = () => {
+      api.post('/login', formData.value)
+        .then(response => {
+          if (response.status === 200) {
+            toast.success('Login Success, Redirecting To Dashboard', {
               timeout: 2000
             });
-            console.error('Error submitting form:', error);
+            
+            const token = response.data.token.token;
+            const user = response.data.token.user;
+
+            // Store token and user info in localStorage
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+
+            router.push('/');
+          }
+        })
+        .catch(error => {
+          toast.error(error.response.data.message, {
+            timeout: 2000
           });
-      };
-  
-      return {
-        formData,
-        submitForm
-      };
+          console.error('Error submitting form:', error);
+        });
+    };
+
+    return {
+      formData,
+      submitForm
+    };
   },
 };
 </script>
