@@ -58,7 +58,7 @@ export default {
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));
 
-            router.push('/');
+            router.push('/dashboard');
           }
         })
         .catch(error => {
