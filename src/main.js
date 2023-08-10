@@ -1,4 +1,15 @@
-import { createApp } from 'vue'
+import "bootstrap/dist/css/bootstrap.css"
+import "./assets/my-theme.css"
+import { createApp } from "vue/dist/vue.esm-bundler";
 import App from './App.vue'
+import router from './router'
+import Toast from "vue-toastification";
+// Import the CSS or use your own!
+import "vue-toastification/dist/index.css";
 
-createApp(App).mount('#app')
+const app = createApp(App);
+app.use(router);
+app.use(Toast); // Menerapkan komponen Toast
+app.mount('#app');
+
+import "bootstrap/dist/js/bootstrap.js"
