@@ -19,7 +19,7 @@
             <router-link to="/dashboard" class="nav-link" :class="{ active: isRouteActive('/dashboard') }" exact>Dashboard</router-link>
           </li>
           <li class="nav-item" >
-            <router-link to="/make-product" :class="{ active: isRouteActive('/make-product') }" class="nav-link" exact>Make Product</router-link>
+            <router-link to="/product" :class="{ active: isRouteActive('/product') }" class="nav-link" exact>Product</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/buy-product" :class="{ active: isRouteActive('/buy-product') }" class="nav-link" exact>Buy Product</router-link>
@@ -35,7 +35,7 @@ export default {
   name: 'NavbarComponent',
   methods: {
     isRouteActive(route) {
-      return this.$route.path === route;
+      return this.$route.path.startsWith(route); // Check for partial match
     }
   }
 };
