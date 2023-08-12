@@ -5,6 +5,7 @@ import DashboardPage from "@/pages/DashboardPage.vue";
 import ProductPage from "@/pages/products/ProductPage.vue";
 import ProductCreatePage from "@/pages/products/ProductCreatePage.vue";
 import ProductEditPage from "@/pages/products/ProductEditPage.vue";
+import ExploreProductPage from "@/pages/products/ExploreProductPage.vue";
 
 
 const routes = [
@@ -14,6 +15,7 @@ const routes = [
   { path: '/product', component: ProductPage,name: 'product', meta: {requiresAuth:true}},
   { path: '/product/create', component: ProductCreatePage,name: 'product-create', meta: {requiresAuth:true}},
   { path: '/product/edit/:productId', component: ProductEditPage,name: 'product-edit', meta: {requiresAuth:true}},
+  { path: '/explore-product', component: ExploreProductPage,name: 'explore-product', meta: {requiresAuth:true}},
   // Tambahkan rute-rute lain di sini
 ];
 
