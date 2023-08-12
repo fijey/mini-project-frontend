@@ -45,9 +45,14 @@
                     <label for="productDescription" class="form-label">Description:</label>
                     <textarea v-model="formData.description" class="form-control" id="productDescription" rows="3"></textarea>
                   </div>
-                  <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-primary secondary-color text-light mx-3">Create</button>
-                  </div>
+                  <div class="col-md-12 text-center">
+                      <button type="submit" class="btn btn-primary secondary-color text-light mx-3">
+                        Save
+                      </button>
+                      <router-link to="/product">
+                        <button type="submit" class="btn secondary-color text-light mx-3 quaternary-color">Cancel</button>
+                      </router-link>
+                    </div>
                 </form>
               </div>
             </div>

@@ -10,11 +10,11 @@
             <div class="create-product-form">
               <div class="card shadow tertiary-color text-light">
                 <div class="card-body">
-                  <h4 class="card-title text-center">Edit Product</h4>
-                  <form @submit.prevent="updateProduct" class="row g-3">
-                    <div class="col-md-12">
-                      <img v-if="previewImage" :src="previewImage" alt="Image Preview" class="mt-2" style="max-width: 100%" />
+                    <h4 class="card-title text-center">Edit Product</h4>
+                    <div>
+                      <img  v-if="previewImage" :src="previewImage" alt="Image Preview" class="mt-2" style="width:20%; height:20%; margin-left:40%" />
                     </div>
+                  <form @submit.prevent="updateProduct" class="row g-3 mt-3">
                     <div class="col-md-6">
                       <label for="productImage" class="form-label">Image:</label>
                       <input
@@ -51,10 +51,13 @@
                       <label for="productDescription" class="form-label">Description:</label>
                       <textarea v-model="formData.description" class="form-control" id="productDescription" rows="3"></textarea>
                     </div>
-                    <div class="col-12 text-center">
+                    <div class="col-md-12 text-center">
                       <button type="submit" class="btn btn-primary secondary-color text-light mx-3">
                         Update
                       </button>
+                      <router-link to="/product">
+                        <button type="submit" class="btn secondary-color text-light mx-3 quaternary-color">Cancel</button>
+                      </router-link>
                     </div>
                   </form>
                 </div>
