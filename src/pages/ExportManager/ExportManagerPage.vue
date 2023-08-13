@@ -55,7 +55,7 @@ export default {
 
     const fetchExportItems = async () => {
       try {
-        const response = await api.get('http://127.0.0.1:8000/api/export-manager');
+        const response = await api.get('/export-manager');
         exportItems.value = response.data.data;
       } catch (error) {
         console.error('Error fetching export items:', error);
