@@ -1,6 +1,6 @@
 <template>
     <div>
-      <NavbarComponent />
+      <NavbarComponent :key="reloadKey"/>
       <div class="container mt-5">
         <div class="row">
           <div
@@ -54,9 +54,14 @@
   import { ref, onMounted } from 'vue';
   import NavbarComponent from '@/components/NavbarComponent.vue';
   import api from '@/api/api.js';
+  import { useToast } from 'vue-toastification';
+  import { useRouter } from 'vue-router';
   
   const products = ref([]);
   const cartItems = ref([]);
+  const toast = useToast();
+  const route = useRouter();
+  const reloadKey = ref(0); // Initialize reload key
   
   const fetchProducts = async () => {
     try {
@@ -94,8 +99,11 @@
   };
   
   const addToCart = (product) => {
-    updateCartItemQuantity(product, 1);
+    // updateCartItemQuantity(product, 1);
+    console.log(product);
     saveCartItems();
+    reloadKey.value++;
+    cartItems.value = [];
   };
   
   const getCartItemQuantity = (product) => {
@@ -110,8 +118,22 @@
     }
   };
   
-  const saveCartItems = () => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems.value));
+  const saveCartItems = async () => {
+    try {
+
+        const response = await api.post('/cart', { cartItems: cartItems.value });
+
+        if (response.status === 200) {
+            toast.success('Cart items saved successfully.');
+            route.push('/explore-product')
+        } else {
+            toast.error('Failed to save cart items.');
+        }
+    } catch (error) {
+        toast.error('Error saving cart items:', error);
+    }
+
+    // localStorage.setItem('cartItems', JSON.stringify(cartItems.value));
   };
   
   const getImageUrl = (imageName) => {
