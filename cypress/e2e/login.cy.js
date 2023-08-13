@@ -1,6 +1,6 @@
 describe('Login Component', () => {
   beforeEach(() => {
-      cy.visit('/login'); // Pastikan rute halaman login benar
+      cy.visit('/login');
   });
 
   it('should display the login form', () => {
