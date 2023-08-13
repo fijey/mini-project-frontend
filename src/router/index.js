@@ -12,6 +12,7 @@ import ExportManagerPage from "@/pages/ExportManager/ExportManagerPage.vue";
 
 const routes = [
   { path: '/', component: LoginPage,name: 'login' },
+  { path: '/login', component: LoginPage,name: 'login' },
   { path: '/register', component: RegisterPage,name: 'register' },
   { path: '/dashboard', component: DashboardPage,name: 'dashboard', meta: {requiresAuth:true}},
   { path: '/product', component: ProductPage,name: 'product', meta: {requiresAuth:true}},

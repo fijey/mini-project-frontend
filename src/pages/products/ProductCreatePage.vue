@@ -28,7 +28,7 @@
                   </div>
                   <div class="col-md-6">
                     <label for="productName" class="form-label">Product Name:</label>
-                    <input v-model="formData.name" type="text" class="form-control" id="productName" required>
+                    <input v-model="formData.name" type="text" class="form-control name" id="productName" required>
                   </div>
                   <div class="col-md-6">
                     <label for="productPrice" class="form-label">Price:</label>
