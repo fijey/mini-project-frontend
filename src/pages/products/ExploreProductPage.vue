@@ -2,7 +2,15 @@
     <div>
       <NavbarComponent :key="reloadKey"/>
       <div class="container mt-5">
-        <div class="row">
+        <div class="text-center">
+          <h3>
+            Discover the Finest Products at OO-Mart
+          </h3>
+          <h6>
+            Affordable Prices, Premium Quality
+          </h6>
+        </div>
+        <div class="row mt-5">
           <div
             class="col-sm-12 col-md-4"
             v-for="product in products"

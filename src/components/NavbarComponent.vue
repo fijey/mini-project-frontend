@@ -21,7 +21,10 @@
             <router-link to="/product" :class="{ active: isRouteActive('/product') }" class="nav-link" exact>Product</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/explore-product" :class="{ active: isRouteActive('/buy-product') }" class="nav-link" exact>Explore Product</router-link>
+            <router-link to="/explore-product" :class="{ active: isRouteActive('/explore-product') }" class="nav-link" exact>Explore Product</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/order" :class="{ active: isRouteActive('/order') }" class="nav-link" exact>Your Order List</router-link>
           </li>
         </ul>
       </div>
