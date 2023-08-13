@@ -114,7 +114,7 @@
           formData.value.quantity = productData.quantity;
           formData.value.description = productData.description;
   
-          previewImage.value = `http://127.0.0.1:8000/images/${productData.image}`;
+          previewImage.value = `${productData.image}`;
         } catch (error) {
                 if (error.response) {
                     const responseData = error.response.data;

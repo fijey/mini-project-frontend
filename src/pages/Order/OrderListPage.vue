@@ -52,7 +52,7 @@
                 <tbody>
                   <tr v-for="product in selectedOrder.products" :key="product.id">
                     <td>
-                      <img :src="'http://127.0.0.1:8000/images/'+product.product.image" class="product-image" alt="Product Image" />
+                      <img :src="product.product.image" class="product-image" alt="Product Image" />
                     </td>
                     <td>{{ product.product.name }}</td>
                     <td>{{ product.quantity }}</td>

@@ -11,12 +11,12 @@
             </div>
         </div>
         <div class="row mt-4 d-flex justify-content-center">
-            <div class="col-sm-12 text-center slide-in">
+            <div class="col-sm-12 text-center slide-in h-50">
                 <label for="product-list">
                     <h4>Your List Product</h4>
                 </label>
-                <div class="table-responsive">
-                    <table class="table table-hover" id="product-list">
+                <div class="table-responsive"  style="max-height:10% !important">
+                    <table class="table table-hover" id="product-list" v-if="pagination">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -27,7 +27,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(product, index) in productList" :key="index">
+                            <tr v-for="(product, index) in pagination.data" :key="index">
                                 <td>{{ index+1 }}</td>
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.price }}</td>
@@ -50,6 +50,14 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row mt-4 d-flex justify-content-center" v-if="pagination">
+        <div class="col-sm-12 text-center slide-in">
+            <button class="btn btn-secondary mx-2" @click="fetchPrevPage" :disabled="!pagination.prev_page_url">Previous Page</button>
+            <button class="btn btn-secondary" @click="fetchNextPage" :disabled="!pagination.next_page_url">Next Page</button>
+            <p>Page {{ pagination.current_page }} of {{ pagination.last_page }}</p>
+            <p>Showing {{ pagination.from }} to {{ pagination.to }} of {{ pagination.total }} products</p>
         </div>
     </div>
     <div class="modal fade show" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" style="display: block;" v-if="selectedProduct">
@@ -80,7 +88,7 @@
         <div class="modal-body primary-color">
           <div class="row">
             <div class="col-md-6">
-              <img :src="'http://127.0.0.1:8000/images/'+selectedProductShow.image" alt="Product Image" class="img-fluid">
+              <img :src="selectedProductShow.image" alt="Product Image" class="img-fluid">
             </div>
             <div class="col-md-6">
               <h4>{{ selectedProductShow.name }}</h4>
@@ -115,11 +123,25 @@ export default {
         const productList = ref([]);
         const selectedProduct = ref(null);
         const selectedProductShow = ref(null);
+        const pagination = ref(null)
 
-        const fetchProducts = async () => {
+        const fetchNextPage = () => {
+                console.log(pagination.value.next_page_url);
+            if (pagination.value.next_page_url) {
+                fetchProducts(pagination.value.current_page + 1);
+            }
+        };
+
+        const fetchPrevPage = () => {
+            if (pagination.value.prev_page_url) {
+                fetchProducts(pagination.value.current_page - 1);
+            }
+        };
+
+        const fetchProducts = async (page = 1) => {
             try {
-                const response = await api.get('/product');
-                productList.value = response.data;
+                const response = await api.get('/product?page='+page);
+                pagination.value = response.data;
             } catch (error) {
                 toast.error('Failed Fetching Data ' + error + '');
                 console.error('Error fetching products:', error);
@@ -179,9 +201,12 @@ export default {
             deleteConfirmed,
             confirmClose,
             showProduct,
+            fetchNextPage,
+            fetchPrevPage,
             productList,
             selectedProduct,
             selectedProductShow,
+            pagination
         };
     },
 };

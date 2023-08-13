@@ -55,7 +55,7 @@
           <div v-for="item in cartItems" :key="item.id" class="d-flex">
             <div class="col-md-4">
               <div class="product-image-container">
-                <div class="product-image" :style="{ backgroundImage: 'url(http://127.0.0.1:8000/images/' + item.product.image + ')' }"></div>
+                <div class="product-image" :style="{ backgroundImage: 'url(' + item.product.image + ')' }"></div>
               </div>
             </div>
             <div class="col-md-8">

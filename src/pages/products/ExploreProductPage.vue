@@ -146,7 +146,7 @@
   
   const getImageUrl = (imageName) => {
     if (imageName) {
-      return `http://127.0.0.1:8000/images/${imageName}`;
+      return `${imageName}`;
     } else {
       return require('@/assets/logo.png');
     }
