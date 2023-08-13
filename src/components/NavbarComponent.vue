@@ -14,9 +14,9 @@
       </button>
       <div class="collapse navbar-collapse" :class="{ 'show': !isCollapsed }" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link to="/dashboard" class="nav-link" :class="{ active: isRouteActive('/dashboard') }" exact>Dashboard</router-link>
-          </li>
+          </li> -->
           <li class="nav-item">
             <router-link to="/product" :class="{ active: isRouteActive('/product') }" class="nav-link" exact>Product</router-link>
           </li>
@@ -25,6 +25,9 @@
           </li>
           <li class="nav-item">
             <router-link to="/order" :class="{ active: isRouteActive('/order') }" class="nav-link" exact>Your Order List</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/export-manager" :class="{ active: isRouteActive('/export-manager') }" class="nav-link" exact>Export Manager</router-link>
           </li>
         </ul>
       </div>

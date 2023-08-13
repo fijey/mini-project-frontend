@@ -7,6 +7,7 @@ import ProductCreatePage from "@/pages/products/ProductCreatePage.vue";
 import ProductEditPage from "@/pages/products/ProductEditPage.vue";
 import ExploreProductPage from "@/pages/products/ExploreProductPage.vue";
 import OrderListPage from "@/pages/Order/OrderListPage.vue";
+import ExportManagerPage from "@/pages/ExportManager/ExportManagerPage.vue";
 
 
 const routes = [
@@ -18,6 +19,7 @@ const routes = [
   { path: '/product/edit/:productId', component: ProductEditPage,name: 'product-edit', meta: {requiresAuth:true}},
   { path: '/explore-product', component: ExploreProductPage,name: 'explore-product', meta: {requiresAuth:true}},
   { path: '/order', component: OrderListPage,name: 'order', meta: {requiresAuth:true}},
+  { path: '/export-manager', component: ExportManagerPage,name: 'export-manager', meta: {requiresAuth:true}},
 
 ];
 
