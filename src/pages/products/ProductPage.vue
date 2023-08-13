@@ -2,19 +2,62 @@
     <NavbarComponent/>
     <div class="container mt-5">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col col-sm-4">
                 <router-link to="/product/create">
-                    <button class="btn secondary-color text-light btn-switch">
-                        Create Your Own Product
+                    <button class="btn btn-success secondary-color text-light btn-switch">
+                        Create Product
                     </button>
                 </router-link>
+            </div>
+            <div class="col col-sm-4">
+                <button class="btn btn-success tertiary-color text-light" @click="showFilter=!showFilter">
+                    {{ showFilter ? 'Hide Filter' : 'Filter Data' }}
+                </button>
+
+            </div>
+            <div class="col col-sm-4">
+                <button class="btn btn-success text-light" @click="exportExcel">
+                    Export Excel
+                </button>
             </div>
         </div>
         <div class="row mt-4 d-flex justify-content-center">
             <div class="col-sm-12 text-center slide-in h-50">
+                <div class="row" v-if="showFilter">
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Product Name:</label>
+                            <input type="text" class="form-control" v-model="filters.name">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="min_price" class="form-label">Min Price:</label>
+                            <input type="number" class="form-control" v-model="filters.min_price">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="max_price" class="form-label">Max Price:</label>
+                            <input type="number" class="form-control" v-model="filters.max_price">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Stok:</label>
+                            <input type="number" class="form-control" v-model="filters.quantity">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-primary mx-3" @click="applyFilters">Apply Filters</button>
+                        <button class="btn btn-danger" @click="resetFilter">reset</button>
+                    </div>
+                </div>
                 <label for="product-list">
                     <h4>Your List Product</h4>
                 </label>
+                <div class="row">
+                </div>
                 <div class="table-responsive"  style="max-height:10% !important">
                     <table class="table table-hover" id="product-list" v-if="pagination">
                         <thead>
@@ -123,7 +166,14 @@ export default {
         const productList = ref([]);
         const selectedProduct = ref(null);
         const selectedProductShow = ref(null);
+        const showFilter = ref(false);
         const pagination = ref(null)
+        const filters = ref({
+            'name' : '',
+            'min_price' : '',
+            'max_price' : '',
+            'stok' : ''
+        })
 
         const fetchNextPage = () => {
                 console.log(pagination.value.next_page_url);
@@ -138,15 +188,42 @@ export default {
             }
         };
 
+        const resetFilter = () => {
+            filters.value.name = "";
+            filters.value.min_price = "";
+            filters.value.max_price = "";
+            filters.value.quantity = "";
+            fetchProducts(1);
+            showFilter.value = false;
+        }
+
+        const applyFilters = () => {
+            fetchProducts(1);
+            showFilter.value = false;
+        }
+ 
         const fetchProducts = async (page = 1) => {
             try {
-                const response = await api.get('/product?page='+page);
+                const filtersString = JSON.stringify(filters.value); // Konversi objek filters menjadi string JSON
+                const response = await api.get(`/product?page=${page}&filters=${encodeURIComponent(filtersString)}`);
                 pagination.value = response.data;
             } catch (error) {
                 toast.error('Failed Fetching Data ' + error + '');
                 console.error('Error fetching products:', error);
             }
         };
+
+        const exportExcel = async () => {
+            try {
+                const response = await api.get(`/product/export-excel`);
+                console.log(response);
+                toast.success('Export Berjalan di Latar Belakang, Cek Progress di Halaman ExportManager');
+                toast.info('Estimasi Selesai 10-30 detik');
+            } catch (error) {
+                toast.error('Failed Fetching Data ' + error + '');
+                console.error('Error fetching products:', error);
+            }
+        }
 
         const editProduct = (product) => {
             router.push(`/product/edit/${product.id}`);
@@ -203,6 +280,11 @@ export default {
             showProduct,
             fetchNextPage,
             fetchPrevPage,
+            resetFilter,
+            applyFilters,
+            exportExcel,
+            showFilter,
+            filters,
             productList,
             selectedProduct,
             selectedProductShow,
