@@ -56,7 +56,7 @@
                     </td>
                     <td>{{ product.product.name }}</td>
                     <td>{{ product.quantity }}</td>
-                    <td>{{ formatCurrency(product.product.price) }}</td>
+                    <td>{{ product.product.price }}</td>
                   </tr>
                 </tbody>
               </table>

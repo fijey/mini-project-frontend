@@ -10,7 +10,42 @@
             Affordable Prices, Premium Quality
           </h6>
         </div>
+        <div class="col-4">
+            <button class="btn btn-success tertiary-color text-light" @click="showFilter=!showFilter">
+                {{ showFilter ? 'Hide Filter' : 'Filter Data' }}
+            </button>
+          </div>
         <div class="row mt-5">
+          <div class="row mb-5" v-if="showFilter">
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Product Name:</label>
+                            <input type="text" class="form-control" v-model="filters.name">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="min_price" class="form-label">Min Price:</label>
+                            <input type="number" class="form-control" v-model="filters.min_price">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="max_price" class="form-label">Max Price:</label>
+                            <input type="number" class="form-control" v-model="filters.max_price">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Stok:</label>
+                            <input type="number" class="form-control" v-model="filters.quantity">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-primary mx-3" @click="applyFilters">Apply Filters</button>
+                        <button class="btn btn-danger" @click="resetFilter">reset</button>
+                    </div>
+          </div>
           <div
             class="col-sm-12 col-md-4"
             v-for="product in products"
@@ -53,6 +88,14 @@
               </div>
             </div>
           </div>
+          <div class="row mt-4 d-flex justify-content-center" v-if="pagination">
+            <div class="col-sm-12 text-center slide-in">
+              <button class="btn btn-secondary mx-2" @click="fetchPrevPage" :disabled="!pagination.prev_page_url">Previous Page</button>
+              <button class="btn btn-secondary" @click="fetchNextPage" :disabled="!pagination.next_page_url">Next Page</button>
+              <p>Page {{ pagination.current_page }} of {{ pagination.last_page }}</p>
+              <p>Showing {{ pagination.from }} to {{ pagination.to }} of {{ pagination.total }} products</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -70,15 +113,53 @@
   const toast = useToast();
   const route = useRouter();
   const reloadKey = ref(0); // Initialize reload key
+  const pagination = ref(null);
+  const showFilter = ref(false);
+  const filters = ref({
+            'name' : '',
+            'min_price' : '',
+            'max_price' : '',
+            'stok' : ''
+        })
+
+        const fetchNextPage = () => {
+                console.log(pagination.value.next_page_url);
+            if (pagination.value.next_page_url) {
+                fetchProducts(pagination.value.current_page + 1);
+            }
+        };
+
+        const fetchPrevPage = () => {
+            if (pagination.value.prev_page_url) {
+                fetchProducts(pagination.value.current_page - 1);
+            }
+        };
+
+        const resetFilter = () => {
+            filters.value.name = "";
+            filters.value.min_price = "";
+            filters.value.max_price = "";
+            filters.value.quantity = "";
+            fetchProducts(1);
+            showFilter.value = false;
+        }
+
+        const applyFilters = () => {
+            fetchProducts(1);
+            showFilter.value = false;
+        }
   
-  const fetchProducts = async () => {
-    try {
-      const response = await api.get('/product');
-      products.value = response.data;
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    }
-  };
+  const fetchProducts = async (page = 1) => {
+  try {
+    const filtersString = JSON.stringify(filters.value); // Konversi objek filters menjadi string JSON
+    const response = await api.get(`/product?page=${page}&filters=${encodeURIComponent(filtersString)}`);
+    products.value = response.data.data; // Update products
+    pagination.value = response.data; // Update pagination data
+  } catch (error) {
+    toast.error('Failed Fetching Data ' + error + '');
+    console.error('Error fetching products:', error);
+  }
+};
   
   onMounted(() => {
     fetchProducts();
