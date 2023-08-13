@@ -57,8 +57,9 @@ export default {
             // Store token and user info in localStorage
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));
-
-            router.push('/product');
+            setTimeout(() => {
+              router.push('/product');
+            }, 2000);
           }
         })
         .catch(error => {
