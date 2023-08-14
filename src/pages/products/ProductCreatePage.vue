@@ -135,9 +135,6 @@ export default {
           }}
     };
 
-  //   const formatPrice = () => {
-  //     formData.value.price = formattedPrice.value;
-  //   };
 
     const handleImageChange = (event) => {
       const file = event.target.files[0];

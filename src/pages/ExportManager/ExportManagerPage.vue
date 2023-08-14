@@ -104,7 +104,6 @@ export default {
 </script>
   
   <style scoped>
-  /* Styles for product image */
   .product-image {
     max-width: 60px;
     max-height: 60px;

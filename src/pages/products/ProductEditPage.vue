@@ -165,8 +165,7 @@
       };
   
       const createProduct = async () => {
-        // Similar to updateProduct, send create request to server
-        // ...
+
       };
       const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -201,6 +200,6 @@
   </script>
   
   <style scoped>
-  /* Styles here */
+
   </style>
   

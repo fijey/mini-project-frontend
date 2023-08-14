@@ -82,7 +82,7 @@
   
       const fetchOrders = async () => {
         try {
-          const response = await api.get('/order'); // Replace with your API endpoint
+          const response = await api.get('/order'); 
           orders.value = response.data.data.map((order) => ({
             id: order.id,
             invoiceNo: `INV-${order.id}-${order.invoice}`,

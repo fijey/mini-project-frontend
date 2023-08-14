@@ -235,10 +235,10 @@
   </script>
   
   <style scoped>
-  /* ... (Gaya lainnya tetap sama) ... */
+  
   
   .card {
-    margin-bottom: 20px; /* Jarak antara setiap kartu */
+    margin-bottom: 20px; 
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
@@ -246,7 +246,7 @@
   
   .card-img-container {
     width: 100%;
-    height: 200px; /* Set the desired height for the images */
+    height: 200px; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -261,7 +261,7 @@
   }
   
   .card-body {
-    padding: 10px; /* Padding di dalam kartu */
+    padding: 10px;
     display: flex;
     flex-direction: column;
   }
@@ -269,14 +269,14 @@
   .description {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap; /* Tampilkan satu baris penuh pada deskripsi */
+    white-space: nowrap; 
     margin-bottom: 10px;
   }
   .quantity {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px 0; /* Menambahkan jarak atas dan bawah */
+  margin: 10px 0; 
 }
 
 .quantity button {
@@ -285,7 +285,7 @@
 }
 
 .quantity-value {
-  margin: 0 10px; /* Menambahkan jarak kiri dan kanan pada angka jumlah produk */
+  margin: 0 10px;
   font-size: 18px;
 }
   </style>
